@@ -18,7 +18,7 @@ const authService = require('./authService');
 
 
 
-var port = 5007;
+var port = 5009;
 
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
@@ -82,12 +82,93 @@ app.get('/menu', function(req, res, next) {
 //app.use('/authServices', authServices);
 //-------------------commented out for now-------------------------------------
 
-app.get('/makeCall', (req, res) => {
-  let URL = authService.makeCall();
-  setTimeout(function() {
-    res.redirect(URL)
-  }, 2000);
+// This route makes an XMLHttpRequest to the ebay trading api
+// Parameters:
+// Variables:
+//    ebayLoginURL: String = The URL composed of the eBay
+//      redirect address with the RuName and URLEncoded
+//      sessionID attached.
+// url: "https://api.sandbox.ebay.com/ws/api.dll");
+// eBay custom headers: [
+// { "X-EBAY-API-SITEID", "0") },
+// { "X-EBAY-API-COMPATIBILITY-LEVEL", "967" },
+// { "X-EBAY-API-CALL-NAME", "GetSessionID" },
+// { "X-EBAY-API-APP-NAME", "StephenC-JamiesPi-SBX-7668815a4-8f5703d8" },
+// { "X-EBAY-API-DEV-NAME",  "be5b455e-1ba1-4e05-871c-9edc6f6e8e7a" },
+// { "X-EBAY-API-CERT-NAME",  "SBX-668815a4911f-7e34-4eff-9a9e-be3c" },
+// { "Cache-Control", "no-cache" },
+// Response:
+// Response is an XML object that is converted to JSON with xml2js
+// Then the SessionID is extracted, encoded, and attached to the
+// ebay redirect url.
+// The user is then directed
+
+app.get('/ebayLogin', (req, res) => {
+
+  const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+  const parseString = require('xml2js').parseString;
+  var ebayLoginURL = '';
+  var data =
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<GetSessionIDRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">\r\n  \r\n\t<ErrorLanguage>en_US</ErrorLanguage>\r\n\t<WarningLevel>High</WarningLevel>\r\n <RuName>Stephen_Conway-StephenC-Jamies-ydafbegg</RuName>\r\n</GetSessionIDRequest>";
+
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+
+  xhr.addEventListener("readystatechange", function() {
+    if (this.readyState === 4) {
+      var xml = this.responseText;
+
+      // console.log(this.responseText);
+      parseString(xml, function(err, result) {
+
+        //console.dir(result.GetSessionIDResponse.SessionID);
+        var sesId = result.GetSessionIDResponse.SessionID.toString();
+        // console.log(sesId);
+        // console.log(typeof(sesId));
+        // console.log(sesId.toString());
+        sesId = encodeURIComponent(sesId);
+
+        ebayLoginURL =
+          `https://signin.sandbox.ebay.com/ws/eBayISAPI.dll?SignIn&RuName=Stephen_Conway-StephenC-Jamies-ydafbegg&SessID=` +
+          sesId;
+
+        console.log(ebayLoginURL);
+
+        return res.redirect(ebayLoginURL);
+      });
+    }
+  });
+
+
+  xhr.open("POST", "https://api.sandbox.ebay.com/ws/api.dll");
+  xhr.setRequestHeader(
+    "X-EBAY-API-SITEID", "0");
+  xhr.setRequestHeader(
+    "X-EBAY-API-COMPATIBILITY-LEVEL", "967");
+  xhr.setRequestHeader(
+    "X-EBAY-API-CALL-NAME", "GetSessionID");
+  xhr.setRequestHeader(
+    "X-EBAY-API-APP-NAME",
+    "StephenC-JamiesPi-SBX-7668815a4-8f5703d8");
+  xhr.setRequestHeader(
+    "X-EBAY-API-DEV-NAME",
+    "be5b455e-1ba1-4e05-871c-9edc6f6e8e7a");
+  xhr.setRequestHeader(
+    "X-EBAY-API-CERT-NAME",
+    "SBX-668815a4911f-7e34-4eff-9a9e-be3c");
+  xhr.setRequestHeader(
+    "Cache-Control", "no-cache");
+  // xhr.setRequestHeader("Postman-Token",
+  //   "de1b4957-5fd5-41a1-8777-684741fe9fd1");
+
+  xhr.send(data);
+
 });
+
+// After eBay Signin eBay redirects here
+app.get('/loggedIn', (req, res) => {
+
+})
 
 
 
