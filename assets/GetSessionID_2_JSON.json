@@ -1,0 +1,12 @@
+{
+  "GetSessionIDResponse": {
+    "$": {
+      "xmlns": "urn:ebay:apis:eBLBaseComponents"
+    },
+    "Timestamp": ["2018-06-08T04:41:53.864Z"],
+    "Ack": ["Success"],
+    "Version": ["1031"],
+    "Build": ["E1031_CORE_APISIGNIN_18564253_R1"],
+    "SessionID": ["GJoEAA**ddb36da81630a096ad72b532fffff97b"]
+  }
+}

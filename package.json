@@ -1,0 +1,23 @@
+{
+  "name": "pipeline-node-00",
+  "version": "1.0.0",
+  "description": "eBay Inventory Management App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chad Conway",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "body-parser-xml": "^1.1.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.11",
+    "http-proxy": "^1.17.0",
+    "node": "^10.2.0",
+    "request": "^2.87.0",
+    "xml2js": "^0.4.19",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
