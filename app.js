@@ -67,6 +67,9 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
+
+
+// ------------------------------- Routes -------------------------------------------------------------
 // index route
 app.get('/', function(req, res, next) {
   res.render('index');
@@ -77,6 +80,7 @@ app.get('/consent', function(req, res, next) {
   res.render('userConsent');
 });
 
+// menu - before logging in
 app.get('/menu', function(req, res, next) {
   res.render('menu');
 });
@@ -235,6 +239,8 @@ app.get('/loggedIn', (req, res) => {
 
 }); //end app.get('/loggedIn')
 
+
+//------------------------------------Servers------------------------------------------------------------
 
 // start server
 http.createServer(app).listen(port, () => {
