@@ -4,6 +4,7 @@ const express = require('express');
 
 const exphbs = require('express-handlebars');
 
+
 const http = require('http');
 
 const https = require('https');
@@ -64,6 +65,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+// per Traversy video
+app.set('views', path.join(__dirname, 'views'));
 
 // Handlebars middleware
 app.engine('handlebars', exphbs({

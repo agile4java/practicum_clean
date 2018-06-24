@@ -1,4 +1,5 @@
 var authService = require('../services/authService');
+const parseString = require('xml2js').parseString;
 
 module.exports = {
 
@@ -71,7 +72,11 @@ module.exports = {
 
   createCategoryList: function(xmlDoc) {
 
+    parseString(xmlDoc, function(err, result) {
+      // extract SessionID from result
+      var ack = result.GetCategoriesResponse.Ack.toString();
+      console.log('Ack is: ' + ack);
+    })
   }
-
 
 } // end module.exports

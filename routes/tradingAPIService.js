@@ -2,6 +2,10 @@ var express = require('express');
 
 var router = express.Router();
 
+const parseString = require('xml2js').parseString;
+
+const xmlReader = require('read-xml');
+
 
 
 // load tradingAPIService.js module from services folder
@@ -22,27 +26,27 @@ router.get('/geteBayOfficialTime', (req, res) => {
 // call to get the highest level categories
 router.get('/getHighCategories', (req, res) => {
 
-  var highCategories;
+    var highCategories;
 
-  // set myPromise equal to call that returns a new promise
-  var myPromise = tradingAPIServices.getHighestCategoriesRequest();
-  // handle the promises resolve and reject parts
-  myPromise.then(function(result) {
-    highCategories = result;
-    console.log('Mypromise results: ');
-    console.log(highCategories);
-    console.log('');
+    // set myPromise equal to call that returns a new promise
+    var myPromise = tradingAPIServices.getHighestCategoriesRequest();
+    // handle the promises resolve and reject parts
+    myPromise.then(function(result) {
+      console.log(result);
+    });
+    // console.log('Mypromise results: ');
+    // console.log(highCategories);
+    // console.log('');
 
-    //res.render('/partials/_categories', {
-    // categories: highCategories
-    //})
-  }, function(err) {
+    // res.render('loggedIn', {
+    //   categories: highCategories
+    // })
+  },
+  function(err) {
     console.log(err);
-  })
+  });
 
 
-
-})
 
 
 // create event handler for getHighestCategories 
