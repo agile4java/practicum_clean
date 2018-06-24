@@ -30,7 +30,7 @@ router.get('/getHighCategories', (req, res) => {
   myPromise.then(function(result) {
     highCategories = result;
     console.log('Mypromise results: ');
-    console.log(typeof(result));
+    console.log(highCategories);
     console.log('');
 
     //res.render('/partials/_categories', {
