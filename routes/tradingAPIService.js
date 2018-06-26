@@ -33,16 +33,25 @@ router.get('/getHighCategories', (req, res) => {
   var myPromise = tradingAPIServices.getHighestCategoriesRequest();
   // handle the promises resolve and reject parts
   myPromise.then(function(result) {
-      categories = tradingAPIServices.readXMLbody(result);
-      res.render('addItem', {
-        categories: categories
-      })
+      res.writeHead(200, {
+        'content-type': 'xml'
+      });
+      res.write(result);
+      res.end();
+      //categories = tradingAPIServices.readXMLbody(result);
+      // res.render('addItem', {
+      //   categories: categories
+      // });
     },
     function(err) {
       console.log(err);
     });
 
 });
+
+router.get('/testClientAjax', function(req, res) {
+  res.send("Hello Client");
+})
 
 
 // create event handler for getHighestCategories 

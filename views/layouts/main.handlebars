@@ -9,11 +9,18 @@
   <div class="container">
     {{> _msg}} {{> _errors}} {{{ body }}}
   </div>
-  <div class="container">
-    {{> _categories }}
+
+  <div id="client-partials">
+
   </div>
-
-
+  <script id="categories-template" type="text/x-handlebars-template">
+  <div class="container">
+    <h1>(Partials _categories)</h1>
+    {{#each categories}}
+    <h1> {{ categories.CategoryName }}</h1>
+    {{/each}}
+  </div>
+</script>
 
 
 

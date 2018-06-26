@@ -33,8 +33,8 @@ var options = {
 };
 
 // xml parser for ebay legacy APIs xml format
-const bodyParser = require('body-parser');
-require('body-parser-xml')(bodyParser);
+//const bodyParser = require('body-parser');
+//require('body-parser-xml')(bodyParser);
 
 // Include Request package for http
 var Request = require("request");
@@ -49,7 +49,7 @@ const app = express();
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Use xml body-parser
-app.use(bodyParser.xml());
+//app.use(bodyParser.xml());
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers',

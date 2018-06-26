@@ -40,6 +40,7 @@ module.exports = {
     var ack = "";
 
     var categoryArray = [];
+    var categoryNameArray = [];
 
     var xmlParsed = new Object();
     var parser = new xml2js.Parser();
@@ -51,8 +52,11 @@ module.exports = {
       for (i = 0; i < numOfCategories; i++) {
         categoryArray.push(result.GetCategoriesResponse.CategoryArray[0]
           .Category[i]);
-        console.log(categoryArray[i].CategoryName[0]);
+        categoryNameArray.push(result.GetCategoriesResponse.CategoryArray[
+            0]
+          .Category[i].CategoryName[0]);
       }
+      console.log(typeof(CategoryNameArray));
       return categoryArray;
     })
   }

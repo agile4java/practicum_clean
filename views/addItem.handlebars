@@ -1,4 +1,13 @@
 <h1>Add Item</h1>
 <ul class="categories-list">
-
+  {{categories}} {{#each categories}}
+  <div class="card">
+    <div class="card-header">
+      Category: {{categories/CategoryName}}
+    </div>
+    <div class="card-body">
+      Details:
+    </div>
+  </div>
+  {{/each}}
 </ul>
