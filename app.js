@@ -4,7 +4,6 @@ const express = require('express');
 
 const exphbs = require('express-handlebars');
 
-
 const http = require('http');
 
 const https = require('https');
@@ -14,6 +13,16 @@ const url = require('url');
 const fs = require('fs');
 
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+
+const cors = require('cors');
+
+const path = require('path');
+
+// Include Request package for http
+const Request = require("request");
+
+// mongoose for connection to mongodb
+const mongoose = require('mongoose');
 
 // Load authService.js module
 const authServices = require('./routes/authServices');
@@ -36,16 +45,19 @@ var options = {
 //const bodyParser = require('body-parser');
 //require('body-parser-xml')(bodyParser);
 
-// Include Request package for http
-var Request = require("request");
+// mongoose connect
+mongoose.connect(config.database);
 
-var path = require('path');
+// mongoose connection confirmation
+mongoose.connection.on('connected', () => {
+  console.log("Connected to dabase " + config.database);
+  console.log("");
+})
 
 // Declare App
 const app = express();
 
-
-
+// middleware for serving public files from public folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Use xml body-parser
